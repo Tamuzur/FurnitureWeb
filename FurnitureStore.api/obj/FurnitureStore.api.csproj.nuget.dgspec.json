@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj": {}
+    "c:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj": {
+    "c:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj",
+        "projectUniqueName": "c:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj",
         "projectName": "FurnitureStore.api",
-        "projectPath": "C:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj",
+        "projectPath": "c:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\FurnitureStore.api.csproj",
         "packagesPath": "C:\\Users\\usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\obj\\",
+        "outputPath": "c:\\Users\\usuario\\Desktop\\AspNetCoreProject\\FurnitureStore.api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
