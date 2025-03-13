@@ -1,1 +1,29 @@
-GET http://localhost:5134
+GET http://localhost:5134/furnitures
+
+###
+GET http://localhost:5134/furnitures/4
+
+###
+POST http://localhost:5134/furnitures
+Content-Type: application/json
+
+{
+    "name": "Ergonomic Office Chair",
+    "type": "Chair",
+    "price": 259.99,
+    "releaseDate": "2024-02-15"
+}
+
+###
+PUT http://localhost:5134/furnitures/1
+Content-Type: application/json
+
+{
+    "name": "Ergonomic Office Chair modified",
+    "type": "Chair",
+    "price": 259.99,
+    "releaseDate": "2024-02-15"
+}
+
+###
+DELETE http://localhost:5134/furnitures/1
