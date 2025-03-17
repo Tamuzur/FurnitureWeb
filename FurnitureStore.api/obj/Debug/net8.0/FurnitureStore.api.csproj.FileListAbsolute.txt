@@ -24,3 +24,9 @@ C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\obj\Debug\net8.0\r
 C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\obj\Debug\net8.0\FurnitureStore.api.pdb
 C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\obj\Debug\net8.0\FurnitureStore.api.genruntimeconfig.cache
 C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\obj\Debug\net8.0\ref\FurnitureStore.api.dll
+C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\bin\Debug\net8.0\MinimalApis.Extensions.dll
+C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\bin\Debug\net8.0\MiniValidation.dll
+C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\obj\Debug\net8.0\FurnitureStore.api.csproj.AssemblyReference.cache
+C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\obj\Debug\net8.0\FurnitureStore.api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\usuario\Desktop\AspNetCoreProject\FurnitureStore.api\obj\Debug\net8.0\Furnitur.C9EB5150.Up2Date

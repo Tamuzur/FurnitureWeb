@@ -10,21 +10,24 @@ public static class FurnitureEndpoints
         new FurnitureDto(3, "Leather Sofa", "Sofa", 899.99m, new DateOnly(2021, 12, 10)),
     ];
 
-    public static WebApplication MapFurnituresEndpoints(this WebApplication app)
+    public static RouteGroupBuilder MapFurnituresEndpoints(this WebApplication app)
     {
+
+        var group = app.MapGroup("furnitures");
+
         //GET /furnitures
-        app.MapGet("furnitures", () => furnitures);
+        group.MapGet("/", () => furnitures);
 
         //GET /furnitures/1
-        app.MapGet("furnitures/{id}", (int id) =>
+        group.MapGet("/{id}", (int id) =>
         {
             FurnitureDto? furniture = furnitures.Find(furnitures => furnitures.Id == id);
             return furniture is null ? Results.NotFound() : Results.Ok(furniture);
         })
         .WithName("GetFurniture");
         
-        //POST
-        app.MapPost("furnitures", (CreateFurnitureDto newFurniture) =>
+        //POST /Furnitures
+        group.MapPost("/", (CreateFurnitureDto newFurniture) =>
         {
             FurnitureDto furniture = new(
                 furnitures.Count + 1,
@@ -36,10 +39,11 @@ public static class FurnitureEndpoints
             furnitures.Add(furniture);
 
             return Results.CreatedAtRoute("GetFurniture", new { id = furniture.Id }, furniture);
-        });
+        })
+        .WithParameterValidation();
 
         //PUT /furnitures
-        app.MapPut("furnitures/{id}", (int id, UpdateFurnitureDto updatedFurniture) =>
+        group.MapPut("/{id}", (int id, UpdateFurnitureDto updatedFurniture) =>
         {
             var index = furnitures.FindIndex(furniture => furniture.Id == id);
 
@@ -60,10 +64,9 @@ public static class FurnitureEndpoints
 
         });
 
-        app.Run();
 
         //DELETE /furnitures/1
-        app.MapDelete("furnitures/{id}", (int id) =>
+        group.MapDelete("/{id}", (int id) =>
         {
             furnitures.RemoveAll(furniture => furniture.Id == id);
 
@@ -71,7 +74,7 @@ public static class FurnitureEndpoints
 
         });
 
-        return app;
+        return group;
     }
 
 
