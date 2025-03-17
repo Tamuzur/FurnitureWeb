@@ -13,7 +13,8 @@ public static class FurnitureEndpoints
     public static RouteGroupBuilder MapFurnituresEndpoints(this WebApplication app)
     {
 
-        var group = app.MapGroup("furnitures");
+        var group = app.MapGroup("furnitures")
+        .WithParameterValidation();   
 
         //GET /furnitures
         group.MapGet("/", () => furnitures);

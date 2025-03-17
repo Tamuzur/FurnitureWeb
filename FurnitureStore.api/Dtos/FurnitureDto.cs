@@ -5,4 +5,5 @@ public record class FurnitureDto(
     string Name,
     string Type,
     decimal Price,
-    DateOnly ReleaseDate);
+    DateOnly ReleaseDate
+);
