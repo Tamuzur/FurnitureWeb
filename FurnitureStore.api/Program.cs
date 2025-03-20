@@ -2,10 +2,11 @@ using FurnitureStore.api.Data;
 using FurnitureStore.api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
+var connString = builder.Configuration.GetConnectionString("FurnitureStore");
+builder.Services.AddSqlite<FurnitureStoreContext>(connString);
+
 var app = builder.Build();
 
-var connString = "Data Source=GameStore.db";
-builder.Services.AddSqlite<FurnitureStoreContext>(connString);
 
 app.MapFurnituresEndpoints();
 

@@ -1,8 +1,12 @@
-using System;
+
 
 namespace FurnitureStore.api.Entities;
 
-public class Type
+public class FType
 {
+
+    public int Id { get; set; }
+
+    public required string Name { get; set; }
 
 }
