@@ -10,4 +10,6 @@ var app = builder.Build();
 
 app.MapFurnituresEndpoints();
 
+app.MigrateDB();
+
 app.Run();

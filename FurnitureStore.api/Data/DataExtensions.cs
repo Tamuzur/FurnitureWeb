@@ -7,7 +7,7 @@ public static class DataExtensions
     public static void MigrateDB(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<FurnitureStore>();
-        dbContext.DataBase.Migrate();
+        var dbContext = scope.ServiceProvider.GetRequiredService<FurnitureStoreContext>();
+        dbContext.Database.Migrate();
     }
 }

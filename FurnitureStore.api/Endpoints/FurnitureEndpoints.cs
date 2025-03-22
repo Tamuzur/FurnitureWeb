@@ -1,4 +1,6 @@
+using FurnitureStore.api.Data;
 using FurnitureStore.api.Dtos;
+using FurnitureStore.api.Entities;
 
 namespace FurnitureStore.api.Endpoints;
 
@@ -28,18 +30,30 @@ public static class FurnitureEndpoints
         .WithName("GetFurniture");
         
         //POST /Furnitures
-        group.MapPost("/", (CreateFurnitureDto newFurniture) =>
+        group.MapPost("/", (CreateFurnitureDto newFurniture, FurnitureStoreContext dbContext) =>
         {
-            FurnitureDto furniture = new(
-                furnitures.Count + 1,
-                newFurniture.Name,
-                newFurniture.Type,
-                newFurniture.Price,
-                newFurniture.ReleaseDate
-            );
-            furnitures.Add(furniture);
+            Furniture furniture = new()
+            {
+                Name = newFurniture.Name,
+                FType = dbContext.FTypes.Find(newFurniture.FTypeId),
+                TypeId = newFurniture.FTypeId,
+                Price = newFurniture.Price,
+                ReleaseDate = newFurniture.ReleaseDate
+            };
 
-            return Results.CreatedAtRoute("GetFurniture", new { id = furniture.Id }, furniture);
+            dbContext.Furnitures.Add(furniture);
+            dbContext.SaveChanges();
+
+            FurnitureDto furnitureDto = new(
+                furniture.Id,
+                furniture.Name,
+                furniture.FType!.Name,
+                furniture.Price,
+                furniture.ReleaseDate
+
+            );
+
+            return Results.CreatedAtRoute("GetFurniture", new { id = furniture.Id }, furnitureDto);
         })
         .WithParameterValidation();
 

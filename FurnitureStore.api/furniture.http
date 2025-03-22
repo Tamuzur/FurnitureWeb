@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "name": "Ergonomic Office Chair",
-    "type": "Chair",
+    "ftypeId": 1,
     "price": 259.99,
     "releaseDate": "2024-02-15"
 }
