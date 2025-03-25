@@ -4,7 +4,7 @@ namespace FurnitureStore.api.Dtos;
 
 public record class UpdateFurnitureDto(
     [Required][StringLength(50)]string Name,
-    [Required][StringLength(50)]string Type,
+    int FTypeId,
     [Range(1,10000)]decimal Price,
     DateOnly ReleaseDate
 );

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace FurnitureStore.api.Data.Migrations
 {
     /// <inheritdoc />
@@ -31,8 +33,7 @@ namespace FurnitureStore.api.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    TypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FTypeId = table.Column<int>(type: "INTEGER", nullable: true),
+                    FTypeId = table.Column<int>(type: "INTEGER", nullable: false),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
                     ReleaseDate = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
@@ -43,7 +44,20 @@ namespace FurnitureStore.api.Data.Migrations
                         name: "FK_Furnitures_FTypes_FTypeId",
                         column: x => x.FTypeId,
                         principalTable: "FTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "FTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Garden table" },
+                    { 2, "Garden chair" },
+                    { 3, "Hammock" },
+                    { 4, "Bench" },
+                    { 5, "Bed" }
                 });
 
             migrationBuilder.CreateIndex(

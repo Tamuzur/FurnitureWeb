@@ -1,26 +1,26 @@
 GET http://localhost:5134/furnitures
 
 ###
-GET http://localhost:5134/furnitures/4
+GET http://localhost:5134/furnitures/1
 
 ###
 POST http://localhost:5134/furnitures
 Content-Type: application/json
 
 {
-    "name": "Ergonomic Office Chair",
+    "name": "Office Desk Marron",
     "ftypeId": 1,
-    "price": 259.99,
+    "price": 25.90,
     "releaseDate": "2024-02-15"
 }
 
 ###
-PUT http://localhost:5134/furnitures/1
+PUT http://localhost:5134/furnitures/3
 Content-Type: application/json
 
 {
     "name": "Ergonomic Office Chair modified",
-    "type": "Chair",
+    "ftypeId": 4,
     "price": 259.99,
     "releaseDate": "2024-02-15"
 }

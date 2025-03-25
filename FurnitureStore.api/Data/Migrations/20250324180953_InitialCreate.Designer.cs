@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureStore.api.Data.Migrations
 {
     [DbContext(typeof(FurnitureStoreContext))]
-    [Migration("20250319174137_InitialCreate")]
+    [Migration("20250324180953_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,6 +33,33 @@ namespace FurnitureStore.api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Garden table"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Garden chair"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Hammock"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Bench"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Bed"
+                        });
                 });
 
             modelBuilder.Entity("FurnitureStore.api.Entities.Furniture", b =>
@@ -41,7 +68,7 @@ namespace FurnitureStore.api.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("FTypeId")
+                    b.Property<int>("FTypeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -54,9 +81,6 @@ namespace FurnitureStore.api.Data.Migrations
                     b.Property<DateOnly>("ReleaseDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FTypeId");
@@ -68,7 +92,9 @@ namespace FurnitureStore.api.Data.Migrations
                 {
                     b.HasOne("FurnitureStore.api.Entities.FType", "FType")
                         .WithMany()
-                        .HasForeignKey("FTypeId");
+                        .HasForeignKey("FTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("FType");
                 });

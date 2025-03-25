@@ -12,20 +12,44 @@ public static class FurnitureMapping
         return new Furniture()
         {
             Name = furniture.Name,
-            TypeId = furniture.FTypeId,
+            FTypeId = furniture.FTypeId,
             Price = furniture.Price,
             ReleaseDate = furniture.ReleaseDate
         };
     }
 
-    public static Furniture ToDto(this Furniture furniture){   
-        return new(
+    public static FurnitureDto ToDto(this Furniture furniture)
+    {   
+        return new FurnitureDto(
                 furniture.Id,
                 furniture.Name,
                 furniture.FType!.Name,
                 furniture.Price,
                 furniture.ReleaseDate
         );
+    }
+
+    public static FurnitureDetailsDto ToFurnitureDetailsDto(this Furniture furniture)
+    {   
+        return new FurnitureDetailsDto(
+                furniture.Id,
+                furniture.Name,
+                furniture.FTypeId,
+                furniture.Price,
+                furniture.ReleaseDate
+        );
+    }
+
+    public static Furniture ToEntity(this UpdateFurnitureDto furniture, int id)
+    {
+        return new Furniture()
+        {
+            Id = id,
+            Name = furniture.Name,
+            FTypeId = furniture.FTypeId,
+            Price = furniture.Price,
+            ReleaseDate = furniture.ReleaseDate
+        };
     }
 
 }

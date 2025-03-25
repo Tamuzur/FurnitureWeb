@@ -1,6 +1,8 @@
 using FurnitureStore.api.Data;
 using FurnitureStore.api.Dtos;
 using FurnitureStore.api.Entities;
+using FurnitureStore.api.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureStore.api.Endpoints;
 
@@ -19,61 +21,52 @@ public static class FurnitureEndpoints
         .WithParameterValidation();   
 
         //GET /furnitures
-        group.MapGet("/", () => furnitures);
+        group.MapGet("/", (FurnitureStoreContext dbContext) => 
+            dbContext.Furnitures.Include(furniture => furniture.FType)
+            .Select(furniture => furniture.ToDto())
+            .AsNoTracking());
 
         //GET /furnitures/1
-        group.MapGet("/{id}", (int id) =>
+        group.MapGet("/{id}", (int id, FurnitureStoreContext dbContext) =>
         {
-            FurnitureDto? furniture = furnitures.Find(furnitures => furnitures.Id == id);
-            return furniture is null ? Results.NotFound() : Results.Ok(furniture);
+            Furniture? furniture = dbContext.Furnitures.Find(id);
+            return furniture is null ? 
+                Results.NotFound() : Results.Ok(furniture.ToFurnitureDetailsDto());
         })
         .WithName("GetFurniture");
         
         //POST /Furnitures
         group.MapPost("/", (CreateFurnitureDto newFurniture, FurnitureStoreContext dbContext) =>
         {
-            Furniture furniture = new()
-            {
-                Name = newFurniture.Name,
-                FType = dbContext.FTypes.Find(newFurniture.FTypeId),
-                TypeId = newFurniture.FTypeId,
-                Price = newFurniture.Price,
-                ReleaseDate = newFurniture.ReleaseDate
-            };
+            Furniture furniture = newFurniture.ToEntity();
+            furniture.FType = dbContext.FTypes.Find(newFurniture.FTypeId);
+
 
             dbContext.Furnitures.Add(furniture);
             dbContext.SaveChanges();
 
-            FurnitureDto furnitureDto = new(
-                furniture.Id,
-                furniture.Name,
-                furniture.FType!.Name,
-                furniture.Price,
-                furniture.ReleaseDate
 
+            return Results.CreatedAtRoute(
+                "GetFurniture", 
+                new { id = furniture.Id }, 
+                furniture.ToFurnitureDetailsDto()
             );
-
-            return Results.CreatedAtRoute("GetFurniture", new { id = furniture.Id }, furnitureDto);
         })
         .WithParameterValidation();
 
         //PUT /furnitures
-        group.MapPut("/{id}", (int id, UpdateFurnitureDto updatedFurniture) =>
+        group.MapPut("/{id}", (int id, UpdateFurnitureDto updatedFurniture, FurnitureStoreContext dbContext ) =>
         {
-            var index = furnitures.FindIndex(furniture => furniture.Id == id);
 
-            if (index == -1)
+            var existingFurniture = dbContext.Furnitures.Find(id);
+
+            if (existingFurniture == null)
             {
                 return Results.NotFound();
             }
 
-            furnitures[index] = new FurnitureDto(
-                id,
-                updatedFurniture.Name,
-                updatedFurniture.Type,
-                updatedFurniture.Price,
-                updatedFurniture.ReleaseDate
-            );
+            dbContext.Entry(existingFurniture).CurrentValues.SetValues(updatedFurniture.ToEntity(id));
+            dbContext.SaveChanges();
 
             return Results.NoContent();
 
@@ -81,9 +74,11 @@ public static class FurnitureEndpoints
 
 
         //DELETE /furnitures/1
-        group.MapDelete("/{id}", (int id) =>
+        group.MapDelete("/{id}", (int id, FurnitureStoreContext dbContext) =>
         {
-            furnitures.RemoveAll(furniture => furniture.Id == id);
+            dbContext.Furnitures
+                .Where(furniture => furniture.Id==id)
+                .ExecuteDelete();
 
             return Results.NoContent();
 

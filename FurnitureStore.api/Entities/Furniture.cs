@@ -6,7 +6,7 @@ public class Furniture
 
     public required string Name { get; set; }
 
-    public int TypeId { get; set; }
+    public int FTypeId { get; set; }
 
     public FType? FType{ get; set; }
 

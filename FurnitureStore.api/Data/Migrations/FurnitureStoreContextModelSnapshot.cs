@@ -65,7 +65,7 @@ namespace FurnitureStore.api.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("FTypeId")
+                    b.Property<int>("FTypeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -78,9 +78,6 @@ namespace FurnitureStore.api.Data.Migrations
                     b.Property<DateOnly>("ReleaseDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FTypeId");
@@ -92,7 +89,9 @@ namespace FurnitureStore.api.Data.Migrations
                 {
                     b.HasOne("FurnitureStore.api.Entities.FType", "FType")
                         .WithMany()
-                        .HasForeignKey("FTypeId");
+                        .HasForeignKey("FTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("FType");
                 });
