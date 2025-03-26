@@ -1,7 +1,10 @@
 GET http://localhost:5134/furnitures
 
 ###
-GET http://localhost:5134/furnitures/1
+GET http://localhost:5134/furnitures/23
+
+###
+GET http://localhost:5134/FTypes
 
 ###
 POST http://localhost:5134/furnitures
@@ -27,3 +30,4 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:5134/furnitures/1
+

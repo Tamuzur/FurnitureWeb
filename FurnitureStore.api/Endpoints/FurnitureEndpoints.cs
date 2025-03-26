@@ -8,12 +8,6 @@ namespace FurnitureStore.api.Endpoints;
 
 public static class FurnitureEndpoints
 {
-    private static readonly List<FurnitureDto> furnitures = [
-        new FurnitureDto(1, "Modern Chair", "Chair", 120.99m, new DateOnly(2023, 5, 20)),
-        new FurnitureDto(2, "Oak Table", "Table", 450.50m, new DateOnly(2022, 8, 15)),
-        new FurnitureDto(3, "Leather Sofa", "Sofa", 899.99m, new DateOnly(2021, 12, 10)),
-    ];
-
     public static RouteGroupBuilder MapFurnituresEndpoints(this WebApplication app)
     {
 
@@ -21,29 +15,31 @@ public static class FurnitureEndpoints
         .WithParameterValidation();   
 
         //GET /furnitures
-        group.MapGet("/", (FurnitureStoreContext dbContext) => 
-            dbContext.Furnitures.Include(furniture => furniture.FType)
+        group.MapGet("/", async (FurnitureStoreContext dbContext) => 
+            await dbContext.Furnitures.Include(furniture => furniture.FType)
             .Select(furniture => furniture.ToDto())
-            .AsNoTracking());
+            .AsNoTracking()
+            .ToListAsync());
 
         //GET /furnitures/1
-        group.MapGet("/{id}", (int id, FurnitureStoreContext dbContext) =>
+        group.MapGet("/{id}", async (int id, FurnitureStoreContext dbContext) =>
         {
-            Furniture? furniture = dbContext.Furnitures.Find(id);
+            
+            Furniture? furniture = await dbContext.Furnitures.FindAsync(id);
             return furniture is null ? 
                 Results.NotFound() : Results.Ok(furniture.ToFurnitureDetailsDto());
         })
         .WithName("GetFurniture");
         
         //POST /Furnitures
-        group.MapPost("/", (CreateFurnitureDto newFurniture, FurnitureStoreContext dbContext) =>
+        group.MapPost("/", async (CreateFurnitureDto newFurniture, FurnitureStoreContext dbContext) =>
         {
             Furniture furniture = newFurniture.ToEntity();
             furniture.FType = dbContext.FTypes.Find(newFurniture.FTypeId);
 
 
             dbContext.Furnitures.Add(furniture);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
 
             return Results.CreatedAtRoute(
@@ -55,10 +51,10 @@ public static class FurnitureEndpoints
         .WithParameterValidation();
 
         //PUT /furnitures
-        group.MapPut("/{id}", (int id, UpdateFurnitureDto updatedFurniture, FurnitureStoreContext dbContext ) =>
+        group.MapPut("/{id}", async (int id, UpdateFurnitureDto updatedFurniture, FurnitureStoreContext dbContext ) =>
         {
-
-            var existingFurniture = dbContext.Furnitures.Find(id);
+ 
+            var existingFurniture = await dbContext.Furnitures.FindAsync(id);
 
             if (existingFurniture == null)
             {
@@ -66,7 +62,7 @@ public static class FurnitureEndpoints
             }
 
             dbContext.Entry(existingFurniture).CurrentValues.SetValues(updatedFurniture.ToEntity(id));
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             return Results.NoContent();
 
@@ -74,11 +70,11 @@ public static class FurnitureEndpoints
 
 
         //DELETE /furnitures/1
-        group.MapDelete("/{id}", (int id, FurnitureStoreContext dbContext) =>
+        group.MapDelete("/{id}", async  (int id, FurnitureStoreContext dbContext) =>
         {
-            dbContext.Furnitures
+            await dbContext.Furnitures
                 .Where(furniture => furniture.Id==id)
-                .ExecuteDelete();
+                .ExecuteDeleteAsync();
 
             return Results.NoContent();
 

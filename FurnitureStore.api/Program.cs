@@ -9,7 +9,9 @@ var app = builder.Build();
 
 
 app.MapFurnituresEndpoints();
+app.MapFTypesEndpoints();
 
-app.MigrateDB();
+
+await app.MigrateDBAsync();
 
 app.Run();
