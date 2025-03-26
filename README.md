@@ -1,4 +1,4 @@
-# 🚀 My REST API (ASP.NET Core)
+# My REST API (ASP.NET Core)
 
 A RESTful API built with **C# and ASP.NET Core**, designed to interact with a **SQLite** relational database using **Entity Framework Core**.
 
